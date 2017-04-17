@@ -1,9 +1,11 @@
 package com.example.adacher.shrinkquizz;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,20 +58,37 @@ public class PartyFragment extends Fragment {
 
                     RadioButton radioButton = (RadioButton) radioGroup.findViewById(id);
                     String answer = radioButton.getText().toString();
-                    Toast.makeText(getContext(), answer, Toast.LENGTH_SHORT).show();
+                    showDialog(answer);
 
 
                 } else {
 
                     Toast.makeText(getContext(), "Debes marcar una opciòn", Toast.LENGTH_SHORT).show();
-                    
-                }
 
+                }
 
 
             }
         });
 
+
+    }
+
+    private void showDialog(String answer) {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle("Nivel de Fiesta");
+        alertDialog.setMessage(new PartyResult(answer).score());
+        alertDialog.setPositiveButton("yeahh", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+
+
+            }
+        });
+
+        alertDialog.show();
 
     }
 
